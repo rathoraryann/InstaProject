@@ -34,7 +34,7 @@ const useGetUserProfileByUsername = (username) => {
 
         getUserProfile()
     }, [username, showToast])
-    return { userProfile, isLoading }
+    return { userProfile, isLoading}
 }
 
 export default useGetUserProfileByUsername
