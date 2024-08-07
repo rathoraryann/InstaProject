@@ -24,7 +24,6 @@ const useGetUserProfileByUsername = (username) => {
 				});
 
 				setUserProfile(userDoc);
-				console.log(userDoc);
 			} catch (error) {
 				showToast("Error", error.message, "error");
 			} finally {
@@ -38,3 +37,5 @@ const useGetUserProfileByUsername = (username) => {
 }
 
 export default useGetUserProfileByUsername
+
+// Error or rendering usernot found  comp

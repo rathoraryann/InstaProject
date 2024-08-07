@@ -3,11 +3,16 @@ import React from 'react'
 import { useUserProfile } from '../../store/userProfileStore'
 import { useAuthStore } from '../../store/authStore'
 import EditProfile from './EditProfile'
+import useFollowUser from '../../hooks/useFollowUser'
 
 const ProfileHeader = () => {
     const {isOpen, onOpen, onClose} = useDisclosure()
+
     const { userProfile } = useUserProfile()
     const { user } = useAuthStore()
+    const {isFollowing, isUpdating, handleFollowers} = useFollowUser(userProfile?.uid)
+
+
     const visitingOwnProfileAndAuth = user && user.username === userProfile.username
     const visitingAnotherProfileAndAuth = user && user.username !== userProfile.username
 
@@ -32,7 +37,10 @@ const ProfileHeader = () => {
 
                         {visitingAnotherProfileAndAuth &&
                         <Flex gap={4} alignItems={'center'} justifyContent={'center '}>
-                            <Button bg={'white'} color={'black'} size={{ base: 'xs', md: 'sm' }} _hover={{ bg: 'blue.600' }}>Follow</Button>
+                            <Button 
+                            onClick={handleFollowers}
+                            isLoading={isUpdating}
+                            bg={'white'} color={'black'} size={{ base: 'xs', md: 'sm' }} _hover={{ bg: 'blue.600' }}>{isFollowing ? "Unfollow" : "Follow"}</Button>
                         </Flex>}
 
                 </Flex>
