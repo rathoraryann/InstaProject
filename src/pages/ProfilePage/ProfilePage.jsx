@@ -16,6 +16,8 @@ const ProfilePage = () => {
      return <UserNotFound />
   }
 
+  console.log(userProfile)
+
   return (
     <Container maxW={'container.lg'} py={5}>
       <Flex

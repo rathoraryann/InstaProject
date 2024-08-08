@@ -7,7 +7,6 @@ import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore'
 const useFollowUser = (userId) => {
     const [isUpdating, setIsUpdating] = useState(false)
     const [isFollowing, setIsFollowing] = useState(false)
-
     const { user, saveUser } = useAuthStore()
     const { userProfile, setUserProfile } = useUserProfile()
 
@@ -30,10 +29,12 @@ const useFollowUser = (userId) => {
                     ...user,
                     following: user.following.filter(uid => uid !== userId)
                 })
-                setUserProfile({
-                    ...userProfile,
-                    followers: userProfile.followers.filter(uid => uid !== user.uid)
-                })
+                if (userProfile) {
+                    setUserProfile({
+                        ...userProfile,
+                        followers: userProfile.followers.filter(uid => uid !== user.uid)
+                    })                    
+                }
                 localStorage.setItem('user-info', JSON.stringify({
                     ...user,
                     following: user.following.filter(uid => uid !== userId)
@@ -51,7 +52,7 @@ const useFollowUser = (userId) => {
                 })
                 localStorage.setItem('user-info', JSON.stringify({
                     ...user,
-                    following: [...user.following.userId]
+                    following: [...user.following, userId]
                 }))
                 setIsFollowing(true)
             }

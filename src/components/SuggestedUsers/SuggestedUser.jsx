@@ -1,6 +1,7 @@
 import { Flex, Avatar, VStack, Box, Button } from "@chakra-ui/react"
 import useFollowUser from '../../hooks/useFollowUser'
 import { useAuthStore } from "../../store/authStore"
+import { useRecoilValue } from "recoil"
 
 const SuggestedUser = ({ User, setUser}) => {
   const {isFollowing, isUpdating, handleFollowers} = useFollowUser(User.uid)
@@ -10,7 +11,8 @@ const SuggestedUser = ({ User, setUser}) => {
     await handleFollowers();
     setUser({
       ...User,
-      followers: isFollowing ? User.followers.filter((follower)=> follower.uid !== user.uid): ([...user.followers, user.uid])
+      followers: isFollowing ? User.followers.filter((follower)=> follower.uid !== user.uid) :
+      [...User.followers, user]
     })
   }
 

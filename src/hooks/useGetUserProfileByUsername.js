@@ -32,6 +32,7 @@ const useGetUserProfileByUsername = (username) => {
 		};
 
         getUserProfile()
+		
     }, [username, showToast])
     return { userProfile, isLoading}
 }
