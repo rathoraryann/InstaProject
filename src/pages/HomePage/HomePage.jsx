@@ -11,7 +11,7 @@ function HomePage() {
           <FeedPosts/>
         </Box>
         <Box flex={3} mr={20} display={{base:'none', lg:'block'}} >
-          {/* <SuggestedUsers/> */}
+          <SuggestedUsers/>
           </Box>
       </Flex>
     </Container>
