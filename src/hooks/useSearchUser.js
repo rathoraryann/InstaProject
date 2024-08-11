@@ -9,8 +9,9 @@ const useSearchUser = () => {
     const showToast = useShowToast()
 
     const getUserProfile = async (username) =>{
+        setIsLoading(true)
+        setUser(null)
         try {
-            setIsLoading(true)
             const q = query(collection(firestore, 'users'), where('username' , '==' , username))
             const querySnapshot = await getDocs(q)
 
