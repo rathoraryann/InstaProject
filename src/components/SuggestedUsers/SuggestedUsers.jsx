@@ -4,9 +4,7 @@ import SuggestedHeader from './SuggestedHeader'
 import useGetSuggestedUsers from '../../hooks/useGetSuggestedUsers'
 
 const SuggestedUsers = () => {
-  console.log('before suggested user hook')
   const {suggestedUsers, isLoading} = useGetSuggestedUsers();
-  console.log('after suggested user hook')
   
   if (isLoading) return null;
   
