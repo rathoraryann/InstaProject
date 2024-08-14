@@ -20,5 +20,14 @@ export const useUserProfile = () => {
     const setUserProfile = (userProfile)=>{
         setUserProfileState(userProfile)
     }
-    return {userProfile, setUserProfile}
+
+    const addPost = (post) => {
+        setUserProfile((prevUserProfile) => ({
+            ...prevUserProfile,
+            posts: [post.id, ...prevUserProfile.posts],
+        }));
+    };
+    
+
+    return {userProfile, setUserProfile, addPost}
 }

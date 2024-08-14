@@ -3,12 +3,35 @@ import { CreatePostLogo } from "../../assets/constants";
 import { BsFillImageFill } from "react-icons/bs";
 import { useRef, useState } from "react";
 import usePreviewImg from '../../hooks/usePreviewImg'
+import useShowToast from "../../hooks/useShowToast";
+import { useAuthStore } from "../../store/authStore";
+import { usePostStore } from "../../store/postStore";
+import { useUserProfile } from "../../store/userProfileStore";
+import { useLocation } from "react-router-dom";
+import { addDoc, arrayUnion, collection, doc, updateDoc } from "firebase/firestore";
+import  {firestore, storage } from '../../firebase/firebase'
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+
+
 
 const CreatePost = () => {
 	const {isOpen, onOpen, onClose} = useDisclosure()
 	const [caption, setCaption] = useState('')
 	const imgRef = useRef(null)
 	const {selectedFile, setSelectedFile, handleImageChange} = usePreviewImg()
+	const {isLoading, handleCreatePost} = useCreatePost()
+	const showToast = useShowToast()
+
+	const handlePostCreation = async() =>{
+		try {
+			await handleCreatePost(selectedFile, caption)
+			onClose();
+			setCaption('')
+			setSelectedFile(null)
+		} catch (error) {
+			showToast("Error", error.message, 'error')
+		}
+	}
 	return (
 		<>
 			<Tooltip
@@ -63,7 +86,7 @@ const CreatePost = () => {
 					</ModalBody>
 
 					<ModalFooter>
-						<Button mr={3}>Post</Button>
+						<Button mr={3} onClick={handlePostCreation} isLoading={isLoading}>Post</Button>
 					</ModalFooter>
 				</ModalContent>
 			</Modal> 
@@ -72,3 +95,55 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
+
+function useCreatePost(){
+	const showToast = useShowToast();
+	const [isLoading, setIsLoading] = useState(false)
+	const {user} = useAuthStore();
+	const {createPost} = usePostStore();
+	const {addPost} = useUserProfile();
+	const {pathname} = useLocation();
+
+	const handleCreatePost = async (selectedFile, caption) =>{
+		if(isLoading) return;
+		if(!selectedFile) throw new Error('Please select an image');
+		setIsLoading(true)
+		const newPost = {
+			caption: caption,
+			likes: [],
+			comments: [],
+			createdAt: Date.now(),
+			createdBy: user.uid,
+		}
+
+		try {
+			const postDocRef = await addDoc(collection(firestore, 'posts'),newPost);
+			const userDocRef = doc(firestore, 'users', user.uid)
+			const imageRef = ref(storage, `posts/${postDocRef.id}`)
+			await updateDoc(userDocRef,{posts:arrayUnion(postDocRef.id)})
+			await uploadString(imageRef, selectedFile, 'data_url')
+			const downloadURL = await getDownloadURL(imageRef)
+			await updateDoc(postDocRef, {image:downloadURL})
+
+			newPost.imageURL = downloadURL;
+
+			createPost({...newPost,id:postDocRef.id})
+			addPost({...newPost,id:postDocRef.id})
+
+			showToast("Success", 'Created post', 'success')
+		} catch (error) {
+			showToast("Error", error.message, 'error')
+		}finally{
+			setIsLoading(false)
+		}
+
+	}
+	return {handleCreatePost, isLoading};
+}
+
+9
+
+9
+
+
+// Function addDoc() called with invalid data. Unsupported field value: undefined (found in field createdBy in document posts/rIfV02netkaIpZPvKzqO)
