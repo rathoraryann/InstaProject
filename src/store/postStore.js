@@ -25,9 +25,9 @@ export const usePostStore = () => {
     setPosts((prevPosts) => [post, ...prevPosts]);
   };
 
-
   return {
     posts,
     createPost,
+    setPosts
   };
 };

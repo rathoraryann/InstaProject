@@ -1,13 +1,19 @@
-import { Avatar, Box, Divider, Flex, Grid, Image, Modal, ModalBody, ModalCloseButton, ModalContent,  ModalOverlay, Text, useDisclosure, VStack } from '@chakra-ui/react'
+import { Avatar, Box, Button, Divider, Flex, Grid, Image, Modal, ModalBody, ModalCloseButton, ModalContent,  ModalOverlay, Text, useDisclosure, VStack } from '@chakra-ui/react'
 import React from 'react'
 import Comments from '../../components/Comments/Comments'
 import { AiFillHeart } from 'react-icons/ai'
 import { FaComment } from 'react-icons/fa'
 import { MdDelete } from 'react-icons/md'
 import PostFooter from '../../components/FeedPosts/PostFooter'
+import {useUserProfile} from '../../store/userProfileStore'
+import { useAuthStore } from '../../store/authStore'
 
-const ProfilePost = ({ img }) => {
+const ProfilePost = ({post }) => {
+  // console.log(post)
   const {isOpen, onOpen, onClose} = useDisclosure()
+  const {userProfile} = useUserProfile()
+  const {user} = useAuthStore()
+  console.log(userProfile)
   return (
     <>
       <Grid
@@ -40,13 +46,13 @@ const ProfilePost = ({ img }) => {
           >
 
             <Flex><AiFillHeart size={20} />
-              <Text fontWeight={'bold'} ml={2}>9</Text></Flex>
+              <Text fontWeight={'bold'} ml={2}>{post.likes.length}</Text></Flex>
 
             <Flex><FaComment size={20} />
-              <Text fontWeight={'bold'} ml={2}>9</Text></Flex>
+              <Text fontWeight={'bold'} ml={2}>{post.comments.length}</Text></Flex>
           </Flex>
         </Flex>
-        <Image src={img} alt='profile pic' w={'100%'} h={'100%'} objectFit={'cover'} />
+        <Image src={post.image} alt='profile pic' w={'100%'} h={'100%'} objectFit={'cover'} />
       </Grid>
 
       <Modal isOpen={isOpen} onClose={onClose}
@@ -58,19 +64,23 @@ const ProfilePost = ({ img }) => {
           <ModalCloseButton />
           <ModalBody bg={'black'} pb={5}>
             <Flex gap={4} mx={'auto'} w={{base:'90%', sm:'70%', md:'full'}}
+            maxH={'90vh'}
+            minH={'50vh'}
             >
-              <Box borderRadius={4} overflow={'hidden'} border={'1px solid'} borderColor={'whiteAlpha.300'} flex={1.5}>
-                <Image src={img} alt='profile pic' />
-              </Box>
+              <Flex borderRadius={4} overflow={'hidden'} border={'1px solid'} borderColor={'whiteAlpha.300'} flex={1.5} justifyContent={'center'} alignItems={'center'}>
+                <Image src={post.image} alt='upload image' />
+              </Flex>
               <Flex flex={1} flexDirection={'column'} px={10} display={{base:'none', md:'flex'}}>
                 <Flex alignItems={'center'} justifyContent={'space-between'}>
                 <Flex alignItems={'center'} gap={4}>
-                  <Avatar src='/profilepic.jpeg' size={'sm'} name='Rathor Aryan'/>
-                  <Text fontWeight={'bold'} fontSize={12}>Rathor Aryan</Text>
+                  <Avatar src={userProfile.profilePicURL} size={'sm'} name='Rathor Aryan'/>
+                  <Text fontWeight={'bold'} fontSize={12}>{userProfile.username}</Text>
                 </Flex>
-                <Box borderRadius={4} p={1} _hover={{bg:'whiteAlpha.300', color:'red.600'}}>
+                { user.uid === userProfile.uid && (
+                  <Button size={'sm'} bg={'transparent'} borderRadius={4} p={1} _hover={{bg:'whiteAlpha.300', color:'red.600'}}>
                   <MdDelete size={20} cursor={'pointer'}/>
-                </Box>
+                </Button>
+                )}
                 </Flex>
                 <Divider my={4} bg={'gray.500'}/>
                 <VStack w={'full'} alignItems={'start'} maxH={'350px'} overflowY={'auto'}>
@@ -85,12 +95,6 @@ const ProfilePost = ({ img }) => {
                   username='Light'
                   profilePic={'https://bit.ly/kent-c-dodds'}
                   text={'og'}
-                  />
-                  <Comments 
-                  createdAt="3h ago"
-                  username='Johan'
-                  profilePic={'https://bit.1y/day-abramov'}
-                  text={'perfect !'}
                   />
                 </VStack>
                 <Divider my={4} bg={'gray.800'}/>
