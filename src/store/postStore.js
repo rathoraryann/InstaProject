@@ -25,9 +25,14 @@ export const usePostStore = () => {
     setPosts((prevPosts) => [post, ...prevPosts]);
   };
 
+  const deletePost = (id) =>{
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id))
+  }
+
   return {
     posts,
     createPost,
-    setPosts
+    setPosts,
+    deletePost
   };
 };

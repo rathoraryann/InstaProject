@@ -27,7 +27,14 @@ export const useUserProfile = () => {
             posts: [post.id, ...prevUserProfile.posts],
         }));
     };
+
+    const deletePost = (id) =>{
+        setUserProfile((prevUserProfile)=>({
+            ...prevUserProfile,
+            posts: prevUserProfile.posts.filter((post) => post.id !== id)
+        }))
+    }
     
 
-    return {userProfile, setUserProfile, addPost}
+    return {userProfile, setUserProfile, deletePost ,addPost}
 }
