@@ -10,6 +10,7 @@ const useGetUserPosts = () => {
     const {posts, setPosts} = usePostStore()
     const showToast = useShowToast()
     const {userProfile} = useUserProfile()
+    // const [error, setError] = useState()
 
     useEffect(()=>{
         const getPosts = async () =>{
@@ -27,6 +28,7 @@ const useGetUserPosts = () => {
 
                 posts.sort((a,b)=>b.createdAt - a.createdAt)
                 setPosts(posts)
+                // setError(posts)
 
             } catch (error) {
                 showToast("Error", error.message, 'error')
@@ -38,6 +40,7 @@ const useGetUserPosts = () => {
         getPosts()
     }, [setPosts,userProfile, showToast])
 
+    // console.log(error)
     return{isLoading,posts}
 }
 

@@ -1,16 +1,17 @@
 import { Avatar, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
+import {timeAgo} from '../../utils/timeAgo'
 
-const Comments = ({createdAt, profilePic, username, text}) => {
+const Comments = ({comment}) => {
   return (
     <Flex gap={4}>
-      <Avatar src={profilePic} name={username} size={'sm'}/>
+      {/* <Avatar src={profilePic} name={username} size={'sm'}/> */}
       <Flex direction={'column'}>
         <Flex  gap={2}>
-          <Text fontWeight={'bold'} fontSize={12}>{username}</Text>
-          <Text fontSize={12}>{text}</Text>
+          {/* <Text fontWeight={'bold'} fontSize={12}>{username}</Text> */}
+          <Text fontSize={12}>{comment.comment}</Text>
         </Flex>
-          <Text fontSize={12} color={'gray'}>{createdAt}</Text>
+          <Text fontSize={12} color={'gray'}>{timeAgo(comment.createdAt)}</Text>
       </Flex>
     </Flex>
   )

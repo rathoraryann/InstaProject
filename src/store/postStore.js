@@ -29,10 +29,23 @@ export const usePostStore = () => {
     setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id))
   }
 
+  const addComment = (postId, comment) =>{
+    posts.map(post=>{
+      if(post.id === postId){
+        return {
+          ...post,
+          comments: [...post.comments, comment]
+        }
+      }
+      return post
+    })
+  }
+
   return {
     posts,
     createPost,
     setPosts,
-    deletePost
+    deletePost,
+    addComment
   };
 };

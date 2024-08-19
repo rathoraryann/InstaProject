@@ -2,10 +2,15 @@ import { Flex, Text, InputGroup, Input, InputRightElement, Button } from "@chakr
 import { useState } from "react"
 import { Box } from "@chakra-ui/react"
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constants"
+import usePostComment from '../../hooks/usePostComment'
+import { useAuthStore } from "../../store/authStore"
 
-const PostFooter = ({ username, isProfilePage }) => {
+const PostFooter = ({post, username, isProfilePage }) => {
   const [liked, setLiked] = useState(false)
   const [likes, setLikes] = useState(99)
+  const [comment, setComment] = useState('')
+  const {isCommenting, handlePostComment} = usePostComment()
+  const {user} = useAuthStore()
 
   const handleSubmit = () => {
     if (liked) {
@@ -15,6 +20,11 @@ const PostFooter = ({ username, isProfilePage }) => {
       setLiked(true)
       setLikes(likes + 1)
     }
+  }
+
+  const handleSubmitComment = async () => {
+    await handlePostComment(post.id, comment)
+    setComment('')
   }
   return (
     <Box mb={10} marginTop={'auto'}>
@@ -44,12 +54,15 @@ const PostFooter = ({ username, isProfilePage }) => {
         </>
       )}
 
-      <Flex alignItems={"center"} gap={2} justifyContent={"space-between"} w={"full"}>
+      {user && (
+        <Flex alignItems={"center"} gap={2} justifyContent={"space-between"} w={"full"}>
         <InputGroup>
           <Input
             variant={"flushed"}
             placeholder={"Add a comment..."}
             fontSize={14}
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
           />
           <InputRightElement>
             <Button
@@ -59,12 +72,15 @@ const PostFooter = ({ username, isProfilePage }) => {
               cursor={"pointer"}
               _hover={{ color: "white" }}
               bg={"transparent"}
+              isLoading={isCommenting}
+              onClick={handleSubmitComment}
             >
               Post
             </Button>
           </InputRightElement>
         </InputGroup>
       </Flex>
+      )}
     </Box>
   )
 }

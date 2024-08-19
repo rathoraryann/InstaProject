@@ -14,7 +14,7 @@ import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { usePostStore } from '../../store/postStore'
 
 const ProfilePost = ({post }) => {
-  // console.log(post)
+  console.log(post)
   const [isDeleting, setIsDeleting] = useState(false)
   const {isOpen, onOpen, onClose} = useDisclosure()
   const {userProfile} = useUserProfile()
@@ -116,21 +116,12 @@ const ProfilePost = ({post }) => {
                 </Flex>
                 <Divider my={4} bg={'gray.500'}/>
                 <VStack w={'full'} alignItems={'start'} maxH={'350px'} overflowY={'auto'}>
-                  <Comments 
-                  createdAt="1d ago"
-                  username='cristie'
-                  profilePic={'https://bit.ly/dan-abramov'}
-                  text={'Nice pic'}
-                  />
-                  <Comments 
-                  createdAt="10h ago"
-                  username='Light'
-                  profilePic={'https://bit.ly/kent-c-dodds'}
-                  text={'og'}
-                  />
+                  {post.comments.map((comment)=>(
+                    <Comments key={comment.id} comment={comment} user={userProfile} />
+                  ))}
                 </VStack>
                 <Divider my={4} bg={'gray.800'}/>
-                <PostFooter isProfilePage={true}/>
+                <PostFooter isProfilePage={true} post={post}/>
               </Flex>
             </Flex>
           </ModalBody>
