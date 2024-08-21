@@ -12,9 +12,10 @@ import { deleteObject, ref } from 'firebase/storage'
 import {firestore, storage} from '../../firebase/firebase'
 import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { usePostStore } from '../../store/postStore'
+import Caption from '../Comments/Caption'
 
-const ProfilePost = ({post }) => {
-  console.log(post)
+const ProfilePost = ({post}) => {
+  // console.log(post)
   const [isDeleting, setIsDeleting] = useState(false)
   const {isOpen, onOpen, onClose} = useDisclosure()
   const {userProfile} = useUserProfile()
@@ -116,8 +117,11 @@ const ProfilePost = ({post }) => {
                 </Flex>
                 <Divider my={4} bg={'gray.500'}/>
                 <VStack w={'full'} alignItems={'start'} maxH={'350px'} overflowY={'auto'}>
-                  {post.comments.map((comment)=>(
-                    <Comments key={comment.id} comment={comment} user={userProfile} />
+
+                  {post.caption && <Caption post={post} />}
+
+                  {post.comments.map((comment, index)=>(
+                    <Comments key={index} comment={comment} user={userProfile} />
                   ))}
                 </VStack>
                 <Divider my={4} bg={'gray.800'}/>

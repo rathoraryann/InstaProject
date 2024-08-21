@@ -32,6 +32,7 @@ export const usePostStore = () => {
   const addComment = (postId, comment) =>{
     posts.map(post=>{
       if(post.id === postId){
+        console.log([...post.comments, comment])
         return {
           ...post,
           comments: [...post.comments, comment]
@@ -49,3 +50,19 @@ export const usePostStore = () => {
     addComment
   };
 };
+
+
+// const addComment = (postId, comment) => {
+//   setPosts((prevPosts) =>
+//     prevPosts.map((post) => {
+//       if (post.id === postId) {
+//         return {
+//           ...post,
+//           comments: [...post.comments, comment],
+//         };
+//       }
+//       return post;
+//     })
+//   );
+// };
+

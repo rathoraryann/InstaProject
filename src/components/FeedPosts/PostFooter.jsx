@@ -4,37 +4,28 @@ import { Box } from "@chakra-ui/react"
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../assets/constants"
 import usePostComment from '../../hooks/usePostComment'
 import { useAuthStore } from "../../store/authStore"
+import useLikePost from "../../hooks/useLikePost"
 
 const PostFooter = ({post, username, isProfilePage }) => {
-  const [liked, setLiked] = useState(false)
-  const [likes, setLikes] = useState(99)
-  const [comment, setComment] = useState('')
+  const {handleLikePost, likes, isLiked} = useLikePost(post)
   const {isCommenting, handlePostComment} = usePostComment()
   const {user} = useAuthStore()
-
-  const handleSubmit = () => {
-    if (liked) {
-      setLiked(false)
-      setLikes(likes - 1)
-    } else {
-      setLiked(true)
-      setLikes(likes + 1)
-    }
-  }
+  const [comment, setComment] = useState('')
 
   const handleSubmitComment = async () => {
     await handlePostComment(post.id, comment)
     setComment('')
   }
+
   return (
     <Box mb={10} marginTop={'auto'}>
       <Flex alignItems={'center'} gap={4} pt={0} mb={2} mt={4}>
         <Box
-          onClick={handleSubmit}
+          onClick={handleLikePost}
           cursor={'pointer'}
           fontSize={18}
         >
-          {!liked ? (<NotificationsLogo />) : (<UnlikeLogo />)}
+          {!isLiked ? (<NotificationsLogo />) : (<UnlikeLogo />)}
         </Box>
 
         <Box cursor={'pointer'} fontSize={18}><CommentLogo /></Box>
