@@ -96,10 +96,13 @@ const ProfilePost = ({post}) => {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody bg={'black'} pb={5}>
-            <Flex gap={4} mx={'auto'} w={{base:'90%', sm:'70%', md:'full'}}
-            maxH={'90vh'}
-            minH={'50vh'}
-            >
+            <Flex
+							gap='4'
+							w={{ base: "90%", sm: "70%", md: "full" }}
+							mx={"auto"}
+							maxH={"90vh"}
+							minH={"50vh"}
+						>
               <Flex borderRadius={4} overflow={'hidden'} border={'1px solid'} borderColor={'whiteAlpha.300'} flex={1.5} justifyContent={'center'} alignItems={'center'}>
                 <Image src={post.image} alt='upload image' />
               </Flex>
@@ -130,6 +133,7 @@ const ProfilePost = ({post}) => {
             </Flex>
           </ModalBody>
         </ModalContent>
+        {/* <Box width={'full'} height={'full'} bgColor={"red"}>hello</Box> */}
       </Modal>
     </>
   )

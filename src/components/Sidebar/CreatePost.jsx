@@ -103,6 +103,7 @@ function useCreatePost(){
 	const {createPost} = usePostStore();
 	const {addPost} = useUserProfile();
 	const {pathname} = useLocation();
+	const {userProfile} = useUserProfile()
 
 	const handleCreatePost = async (selectedFile, caption) =>{
 		if(isLoading) return;
@@ -115,6 +116,7 @@ function useCreatePost(){
 			createdAt: Date.now(),
 			createdBy: user.uid,
 		}
+		// console.log(newPost)
 
 		try {
 			const postDocRef = await addDoc(collection(firestore, 'posts'),newPost);
@@ -127,8 +129,8 @@ function useCreatePost(){
 
 			newPost.imageURL = downloadURL;
 
-			createPost({...newPost,id:postDocRef.id})
-			addPost({...newPost,id:postDocRef.id})
+			if (userProfile.uid == user.uid) createPost({...newPost,id:postDocRef.id})
+			if (pathname !== '/' && userProfile.uid === user.uid) addPost({...newPost,id:postDocRef.id})
 
 			showToast("Success", 'Created post', 'success')
 		} catch (error) {
@@ -140,10 +142,3 @@ function useCreatePost(){
 	}
 	return {handleCreatePost, isLoading};
 }
-
-9
-
-9
-
-
-// Function addDoc() called with invalid data. Unsupported field value: undefined (found in field createdBy in document posts/rIfV02netkaIpZPvKzqO)

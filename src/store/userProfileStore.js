@@ -15,11 +15,11 @@ const userProfileSelector = selector({
 })
 
 export const useUserProfile = () => {
-    const [userProfile, setUserProfileState] = useRecoilState(userProfileSelector)
+    const [userProfile, setUserProfile] = useRecoilState(userProfileSelector)
 
-    const setUserProfile = (userProfile)=>{
-        setUserProfileState(userProfile)
-    }
+    // const setUserProfile = (userProfile)=>{
+    //     setUserProfileState(userProfile)
+    // }
 
     const addPost = (post) => {
         setUserProfile((prevUserProfile) => ({
