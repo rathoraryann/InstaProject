@@ -9,9 +9,9 @@ import { Link as RouterLink } from 'react-router-dom'
 
 const ProfilePage = () => {
   const { username } = useParams()
-  const {isloading, userProfile} = useGetUserProfileByUsername(username)
+  const {isLoading, userProfile} = useGetUserProfileByUsername(username)
 
-  const userNotFound = !isloading && !userProfile
+  const userNotFound = !isLoading && !userProfile
   if (userNotFound) {
      return <UserNotFound />
   }
@@ -26,8 +26,8 @@ const ProfilePage = () => {
       mx={'auto'}
       flexDirection={'column'}
       >
-        {!isloading && userProfile &&<ProfileHeader /> }
-        {isloading &&<ProfileHeaderSkeleton /> }
+        {!isLoading && userProfile &&<ProfileHeader /> }
+        {isLoading &&<ProfileHeaderSkeleton /> }
         
       </Flex>
       <Flex
