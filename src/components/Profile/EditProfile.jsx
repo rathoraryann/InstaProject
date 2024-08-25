@@ -23,14 +23,14 @@ import useEditProfile from "../../hooks/useEditProfile";
 import useShowToast from "../../hooks/useShowToast";
 
 const EditProfile = ({ isOpen, onClose }) => {
+	const {user} = useAuthStore()
 
 	const fileRef = useRef(null)
     const [inputs, setInputs] = useState({
-		fullName: '',
-        username: '',
-        bio: ''
+		fullName: user.fullName,
+        username: user.username,
+        bio: user.bio
     })
-	const {user} = useAuthStore()
 	const showToast = useShowToast()
 
 
