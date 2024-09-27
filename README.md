@@ -8,8 +8,15 @@ You can view the web app here:
 
 - **Website Link**: [AryanInsta](https://aryaninsta.netlify.app/auth)
 
+## Authentication
+AryanInsta Authentication
 ![Instagram Authenticaiton](https://github.com/rathoraryann/InstaProject/blob/main/src/images/Screenshot%20(12).png)
+
+## Dashboard
+AryanInsta Dashboard
 ![Instagram Dashboard](https://github.com/rathoraryann/InstaProject/blob/main/src/images/Screenshot%20(13).png)
+
+## User Profile
 ![Instagram User Profile](https://github.com/rathoraryann/InstaProject/blob/main/src/images/Screenshot%20(14).png)
 
 ## Features
