@@ -1,12 +1,25 @@
-<<<<<<< HEAD
-# React + Vite
+# AryanInsta - Instagram | Social media web app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
+A social media application that replicates the core features of the original Instagram platform. Users can create accounts, upload photos, follow other users, like posts, and leave comments
 
-Currently, two official plugins are available:
+## Live Website
+You can view the web app here:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-=======
-# InstaProject
->>>>>>> origin/main
+- **Website Link**: [AryanInsta](https://aryaninsta.netlify.app/auth)
+
+![Instagram Authenticaiton](https://github.com/rathoraryann/InstaProject/blob/main/src/images/Screenshot%20(12).png)
+![Instagram Dashboard](https://github.com/rathoraryann/InstaProject/blob/main/src/images/Screenshot%20(13).png)
+![Instagram User Profile](https://github.com/rathoraryann/InstaProject/blob/main/src/images/Screenshot%20(14).png)
+
+## Features
+  - **User Login/Register**: Secure access for users.
+  - **Create Post**: Users can create post.
+  - **Dynamic Interaction**: Users can like and comment on each other posts
+
+## Technologies Used
+
+- **Frontend**: React, Recoil, ChakraUI
+- **Backend**: Google Firebase
+- **Database**: Google Firebase Database
+- **Deployment**: Netlify
