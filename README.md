@@ -6,7 +6,7 @@ A social media application that replicates the core features of the original Ins
 ## Live Website
 You can view the web app here:
 
-- **Website Link**: [AryanInsta](https://aryaninsta.netlify.app/auth)
+- **Website Link**: [AryanInsta](https://aryaninsta.netlify.app/)
 
 ## Authentication
 AryanInsta Authentication
